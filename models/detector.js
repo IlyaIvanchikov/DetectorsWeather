@@ -35,6 +35,25 @@ toJSON() {
             )
         })
     }
+
+static async update(detector) {
+    const detectors = await Detectors.allInfo();
+    const idx = detectors.findIndex(d => d.id === detector.id);
+    detectors[idx] = detector;
+    return new Promise((resolve, reject) => {
+        fs.writeFile
+        (path.join(__dirname, '..', 'data', 'detector.json'),
+        JSON.stringify(detectors),
+        (err) => {
+        if (err) {
+            reject(err);
+        } else {
+            resolve(detectors);
+        }
+                }
+            )
+        })
+}
 static allInfo() {
     return new Promise((resolve, reject) => {
         fs.readFile
