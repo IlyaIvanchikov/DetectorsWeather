@@ -1,0 +1,21 @@
+<h1>Датчики</h1>
+{{#if detector.length}}
+{{#each detector}}
+<div class="row">
+    <div class="col s6 offset-s3">
+      <div class="card light-green darken-1 hoverable">
+        <div class="card-content white-text">
+          <span class="card-title name_detector">{{name_detector}}</span>
+          <span class="card-title model_detector">{{model_detector}}</span>
+          <span class="card-title producing_country">{{producing_country}}</span>
+        </div>
+        <div class="card-action">
+          <a href="/{{id}}" target="__blank">Открыть датчик</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/each}}
+{{else}}
+<p>Датчики отсутствуют</p>
+{{/if}}

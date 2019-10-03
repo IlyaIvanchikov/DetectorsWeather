@@ -1,0 +1,17 @@
+.nav-wrapper {
+    padding: 0 2rem;
+}
+
+.card-title.name_detector {
+    font-size: 3rem;
+    color: black;
+}
+.sensor h1 {
+    margin-bottom: 2rem;
+    background-color:red;
+}
+
+.sensor p {
+    background-color: grey;
+    font-size: 2rem;
+}
