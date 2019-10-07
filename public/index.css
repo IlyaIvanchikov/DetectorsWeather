@@ -1,7 +1,3 @@
-.nav-wrapper {
-    padding: 0 2rem;
-}
-
 .card-title.name_detector {
     font-size: 3rem;
     color: black;
@@ -14,4 +10,13 @@
 .sensor p {
     background-color: grey;
     font-size: 2rem;
+}
+
+nav .brand-logo {
+    font-size: 3vw;
+}
+
+.container {
+    width: 100%;
+    max-width: 100vw;
 }

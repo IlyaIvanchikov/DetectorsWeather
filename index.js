@@ -4,6 +4,7 @@ const exphbs = require('express-handlebars');
 const routerHome = require('./routes/home');
 const routerAdd = require('./routes/add');
 const routerSensors = require('./routes/sensors');
+const mongoose = require('mongoose');
 const app = express();
 
 const hbs = exphbs.create({
@@ -23,6 +24,17 @@ app.use(routerSensors);
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-    console.log(`server  is running on port ${PORT}`);
-})
+
+const start = async () => {
+    try {
+    const url = 'mongodb+srv://IlyaIvanchikov:456455741852www))@weather-km4rd.mongodb.net/test?retryWrites=true&w=majority';
+    await mongoose.connect(url, {useNewUrlParser: true})
+    app.listen(PORT, () => {
+        console.log(`server  is running on port ${PORT}`);
+    })
+ }
+    catch(err) {
+        console.log(err);
+ }
+}
+start();
