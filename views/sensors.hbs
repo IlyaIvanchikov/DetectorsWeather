@@ -9,9 +9,13 @@
           <span class="card-title model_detector">{{model_detector}}</span>
           <span class="card-title producing_country">{{producing_country}}</span>
         </div>
-        <div class="card-action ">
+        <div class="card-action">
           <a href="/sensors/{{id}}" target="__blank">Открыть</a>
           <a href="/sensors/edit/{{id}}?allow=true">Редактировать</a>
+          <form action="/delete" method="POST">
+          <input type="hidden" name="id" value="{{id}}">
+          <button type="submit" class="btn btn-primary">Удалить</button>
+          </form>
         </div>
       </div>
     </div>

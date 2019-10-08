@@ -16,7 +16,7 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', 'views');
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended: true}));
 app.use(routerHome);
 app.use('/add', routerAdd);
@@ -27,8 +27,10 @@ const PORT = process.env.PORT || 3000;
 
 const start = async () => {
     try {
-    const url = 'mongodb+srv://IlyaIvanchikov:456455741852www))@weather-km4rd.mongodb.net/test?retryWrites=true&w=majority';
-    await mongoose.connect(url, {useNewUrlParser: true})
+    const url = 'mongodb+srv://IlyaIvanchikov:456455741852www))@weather-km4rd.mongodb.net/detector';
+    await mongoose.connect(url, {useNewUrlParser: true, 
+                                 useUnifiedTopology: true,
+                                 useFindAndModify: false})
     app.listen(PORT, () => {
         console.log(`server  is running on port ${PORT}`);
     })

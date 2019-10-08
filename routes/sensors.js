@@ -3,7 +3,7 @@ const Detectors = require('../models/detector');
 const router = Router();
 
 router.get('/sensors',  async (req, res) => {
-    const detector = await Detectors.allInfo();
+    const detector = await Detectors.find();
     res.render('sensors', {
         title: "Датчики",
         isSensors: true,
@@ -15,7 +15,7 @@ router.get('/sensors/edit/:id', async (req, res) => {
     if (!req.query.allow) {
         return res.redirect('/');
     }
-    const detector = await Detectors.getById(req.params.id);
+    const detector = await Detectors.findById(req.params.id);
     res.render('sensor-edit', {
         title: `Датчик ${detector.name_detector}`,
         layout: 'empty', 
@@ -24,7 +24,7 @@ router.get('/sensors/edit/:id', async (req, res) => {
 });
 
 router.get('/sensors/:id', async (req, res) => {
-    const detector = await Detectors.getById(req.params.id);
+    const detector = await Detectors.findById(req.params.id);
     res.render('sensor', {
         title: `Датчик ${detector.name_detector}`,
         layout: 'empty', 
@@ -32,8 +32,22 @@ router.get('/sensors/:id', async (req, res) => {
     });
 })
 
-router.post('/sensors', async (req, res) => {
-    await Detectors.update(req.body);
+router.post('/edit', async (req, res) => {
+    const {id} = req.body;
+    console.log(id);
+    delete req.body.id;
+    await Detectors.findOneAndUpdate(id, req.body);
     res.redirect('/sensors');
+})
+
+router.post('/delete', async (req, res) => {
+    try {
+        await Detectors.deleteOne({_id: req.body.id});
+        res.redirect('/sensors');
+    }
+    catch(e) {
+    console.log(e);
+    }
+
 })
 module.exports = router;
