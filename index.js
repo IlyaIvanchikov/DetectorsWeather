@@ -3,6 +3,7 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const routerHome = require('./routes/home');
 const routerAdd = require('./routes/add');
+const routerLogin = require('./routes/auth');
 const routerSensors = require('./routes/sensors');
 const mongoose = require('mongoose');
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(routerHome);
 app.use('/add', routerAdd);
 app.use(routerSensors);
+app.use(routerLogin);
 
 const PORT = process.env.PORT || 3000;
 

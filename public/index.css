@@ -20,3 +20,7 @@ nav .brand-logo {
     width: 100%;
     max-width: 100vw;
 }
+
+.auth {
+    padding-top: 1rem;
+}
