@@ -14,44 +14,48 @@
         {{else}}
         <li><a href="/sensors">Датчики</a></li>
         {{/if}}
-        
-        {{#if isAdd}}
-        <li class="active"><a href="/add">Добавить датчик</a></li>
-         {{else}}
-        <li><a href="/add">Добавить датчик</a></li>
-        {{/if}}
-
-        {{#if isLogin}}
-        <li class="active"><a href="auth/login#login">Авторизация</a></li>
-        {{else}}
-        <li><a href="auth/login#login">Авторизация</a></li>
+        {{#if isAuth}}
+            {{#if isAdd}}
+            <li class="active"><a href="/add">Добавить датчик</a></li>
+            {{else}}
+            <li><a href="/add">Добавить датчик</a></li>
+            {{/if}}
+            <li><a href="auth/logout">Logout</a></li>
+          {{else}}
+          {{#if isLogin}}
+          <li class="active"><a href="/auth/login#login">Авторизация</a></li>
+          {{else}}
+          <li><a href="/auth/login#login">Авторизация</a></li>
+          {{/if}}
         {{/if}}
       </ul>
     </div>
   </nav>
 
   <ul class="sidenav" id="mobile-demo">
-          {{#if isHome}}
-          <li class="active"><a href="/">Главная</a></li>
-          {{else}}
-          <li><a href="/">Главная</a></li>
-          {{/if}}
+        {{#if isHome}}
+        <li class="active"><a href="/">Главная</a></li>
+        {{else}}
+        <li><a href="/">Главная</a></li>
+        {{/if}}
 
-          {{#if isSensors}}
-          <li class="active"><a href="/sensors">Датчики</a></li>
+        {{#if isSensors}}
+        <li class="active"><a href="/sensors">Датчики</a></li>
+        {{else}}
+        <li><a href="/sensors">Датчики</a></li>
+        {{/if}}
+        {{#if isAuth}}
+            {{#if isAdd}}
+            <li class="active"><a href="/add">Добавить датчик</a></li>
+            {{else}}
+            <li><a href="/add">Добавить датчик</a></li>
+            {{/if}}
+            <li><a href="auth/logout">Logout</a></li>
           {{else}}
-          <li><a href="/sensors">Датчики</a></li>
-          {{/if}}
-          
-          {{#if isAdd}}
-          <li class="active"><a href="/add">Добавить датчик</a></li>
+          {{#if isLogin}}
+          <li class="active"><a href="auth/login#login">Авторизация</a></li>
           {{else}}
-          <li><a href="/add">Добавить датчик</a></li>
+          <li><a href="auth/login#login">Авторизация</a></li>
           {{/if}}
-
-          {{#if isALogin}}
-          <li class="active"><a href="/login">Авторизация</a></li>
-          {{else}}
-          <li><a href="/login">Авторизация</a></li>
-          {{/if}}
-        </ul>
+        {{/if}}
+      </ul>
