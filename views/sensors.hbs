@@ -11,11 +11,13 @@
         </div>
         <div class="card-action">
           <a href="/sensors/{{id}}" target="__blank">Открыть</a>
+          {{#if @root.isAuth}}
           <a href="/sensors/edit/{{id}}?allow=true">Редактировать</a>
           <form action="/delete" method="POST">
           <input type="hidden" name="id" value="{{id}}">
           <button type="submit" class="btn btn-primary">Удалить</button>
           </form>
+          {{/if}}
         </div>
       </div>
     </div>

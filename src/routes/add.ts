@@ -1,16 +1,16 @@
-const {Router} = require("express");
-const Detectors = require('../models/detector');
-const router = Router();
-const auth = require('../middleware/auth');
+import Router  from 'express';
+import Detectors  from '../models/detector';
 
-router.get('/', auth, (req, res) => {
+const router = Router();
+
+router.get('/', (req, res) => {
     res.render('add', {
         title: "Новый датчик",
         isAdd: true
     });
 });
 
-router.post('/', auth, async (req, res) => {
+router.post('/', async (req, res) => {
     const detector = new Detectors({
       model_detector: req.body.model_detector,
       name_detector: req.body.name_detector,
@@ -26,4 +26,4 @@ router.post('/', auth, async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

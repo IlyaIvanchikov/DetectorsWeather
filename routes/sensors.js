@@ -1,5 +1,6 @@
 const {Router} = require("express");
 const Detectors = require('../models/detector');
+const auth = require('../middleware/auth');
 const router = Router();
 
 router.get('/sensors',  async (req, res) => {
@@ -11,7 +12,7 @@ router.get('/sensors',  async (req, res) => {
     });
 });
 
-router.get('/sensors/edit/:id', async (req, res) => {
+router.get('/sensors/edit/:id', auth, async (req, res) => {
     if (!req.query.allow) {
         return res.redirect('/');
     }
@@ -32,7 +33,7 @@ router.get('/sensors/:id', async (req, res) => {
     });
 })
 
-router.post('/edit', async (req, res) => {
+router.post('/edit', auth, async (req, res) => {
     const {id} = req.body;
     console.log(id);
     delete req.body.id;
@@ -40,7 +41,7 @@ router.post('/edit', async (req, res) => {
     res.redirect('/sensors');
 })
 
-router.post('/delete', async (req, res) => {
+router.post('/delete', auth, async (req, res) => {
     try {
         await Detectors.deleteOne({_id: req.body.id});
         res.redirect('/sensors');
