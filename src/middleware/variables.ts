@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+// import { Request, Response } from "express";
 
-const constMiddleware = (req, res, next) => {
-    res.locals.isAuth = req.session.isAuthenticated;
+// const constMiddleware = (req, res, next) => {
+//     res.locals.isAuth = req.session.isAuthenticated;
 
-    next();
-};
+//     next();
+// };
 
-export default constMiddleware;
+// export default constMiddleware;
