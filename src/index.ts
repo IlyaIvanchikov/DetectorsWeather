@@ -2,14 +2,14 @@
  import path from 'path';
  import exphbs from 'express-handlebars';
  import routerHome from './routes/home';
-//  import routerAdd from './routes/add';
-//  import routerLogin from './routes/auth';
-//  import routerSensors from './routes/sensors';
+ import routerAdd from './routes/add';
+ import routerLogin from './routes/auth';
+ import routerSensors from './routes/sensors';
  import mongoose from 'mongoose';
  import session from 'express-session';
- import connectMongo = require('connect-mongodb-session')
- const MongoDBStore = connectMongo(session)
-//  import constMiddleware from './middleware/variables';
+ import connectMongo = require('connect-mongodb-session');
+ const MongoDBStore = connectMongo(session);
+ import constMiddleware from './middleware/variables';
 
  const MONGODB_URI = 'mongodb+srv://IlyaIvanchikov:456455741852www))@weather-km4rd.mongodb.net/detector';
  const app = express();
@@ -36,12 +36,12 @@ app.use(session({
     saveUninitialized: false,
     store
 }));
-// app.use(constMiddleware);
+app.use(constMiddleware);
 
 app.use(routerHome);
-// app.use('/add', routerAdd);
-// app.use(routerSensors);
-// app.use(routerLogin);
+app.use('/add', routerAdd);
+app.use(routerSensors);
+app.use(routerLogin);
 
  const PORT = process.env.PORT || 3000;
 
