@@ -1,9 +1,7 @@
-// import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
-// const constMiddleware = (req, res, next) => {
-//     res.locals.isAuth = req.session.isAuthenticated;
+export default (req: Request, res: Response, next: NextFunction) => {
+    res.locals.isAuth = req!.session!.isAuthenticated;
 
-//     next();
-// };
-
-// export default constMiddleware;
+    next();
+};

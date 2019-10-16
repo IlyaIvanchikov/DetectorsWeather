@@ -9,7 +9,7 @@
  import session from 'express-session';
  import connectMongo = require('connect-mongodb-session');
  const MongoDBStore = connectMongo(session);
- // import constMiddleware from './middleware/variables';
+ import constMiddleware from './middleware/variables';
 
  const MONGODB_URI = 'mongodb+srv://IlyaIvanchikov:456455741852www))@weather-km4rd.mongodb.net/detector';
  const app = express();
@@ -36,7 +36,7 @@ app.use(session({
     saveUninitialized: false,
     store
 }));
-// app.use(constMiddleware);
+app.use(constMiddleware);
 
 app.use(routerHome);
 app.use('/add', routerAdd);
@@ -52,7 +52,6 @@ app.use(routerLogin);
                                          useFindAndModify: false})
     app.listen(PORT, () => {
         console.log(`server  is running on port ${PORT}`);
-        console.log('hello');
     })
  }
     catch(err) {

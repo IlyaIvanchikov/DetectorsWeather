@@ -1,7 +1,8 @@
-/* import express from 'express';
-export const auth = (req, res, next) => {
-    if (!req.session.isAuthenticated) {
-        return res.redirect('/');
+import { Request, Response, NextFunction } from "express";
+
+export default (request: Request, response: Response, next: NextFunction) => {
+    if (!request!.session!.isAuthenticated) {
+        return response.redirect('/');
     }
     next();
-} */
+} 
