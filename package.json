@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node build/index.js",
-    "dev": "nodemon build/index.js",
-    "build": "tsc",
-    "build:watch": "tsc --watch",
-    "views": "cp -r ./views ./build/public",
+    "debugger": "node --inspect=5858 -r ts-node/register ./src/index.ts",
+    "start": "nodemon build/index.js",
+    "build": "tsc --watch",
+    "views": "cp -r ./views ./build/views",
     "public": "cp -r ./public ./build/public",
     "fbuild": "npm run build && npm run views && npm run public"
   },
@@ -29,10 +28,11 @@
     "@types/express-handlebars": "0.0.33",
     "@types/express-session": "^1.15.14",
     "@types/mongoose": "^5.5.20",
-    "@types/node": "^12.7.12",
+    "@types/node": "^12.11.1",
     "eslint": "^6.5.1",
     "eslint-plugin-import": "^2.18.2",
-    "nodemon": "^1.19.2",
-    "ts-node": "^8.4.1"
+    "nodemon": "^1.19.4",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.4"
   }
 }
