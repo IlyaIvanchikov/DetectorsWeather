@@ -37,7 +37,7 @@ router.get('/sensors/:id', async (req, res) => {
 router.post('/edit', auth, async (req, res) => {
     const { id } = req.body;
     delete req.body.id;
-    await Detectors.findByIdAndUpdate(id, req.body);
+    await Detectors.findOneAndUpdate({_id: id}, req.body);
     res.redirect('/sensors');
 })
 

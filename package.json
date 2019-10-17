@@ -8,8 +8,9 @@
     "dev": "nodemon build/index.js",
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "startjs": "node index.js",
-    "go": "npm run build & npm run build:watch & npm run dev"
+    "views": "cp -r ./views ./build/public",
+    "public": "cp -r ./public ./build/public",
+    "fbuild": "npm run build && npm run views && npm run public"
   },
   "keywords": [],
   "author": "",
