@@ -1,5 +1,6 @@
  import express from 'express';
  import path from 'path';
+ import csurf from 'csurf';
  import exphbs from 'express-handlebars';
  import routerHome from './routes/home';
  import routerAdd from './routes/add';
@@ -36,6 +37,8 @@ app.use(session({
     saveUninitialized: false,
     store
 }));
+
+app.use(csurf());
 app.use(constMiddleware);
 
 app.use(routerHome);
