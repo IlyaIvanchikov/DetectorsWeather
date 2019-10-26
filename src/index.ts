@@ -1,6 +1,7 @@
  import express from 'express';
  import path from 'path';
  import csurf from 'csurf';
+ import flash from 'connect-flash';
  import exphbs from 'express-handlebars';
  import routerHome from './routes/home';
  import routerAdd from './routes/add';
@@ -39,6 +40,7 @@ app.use(session({
 }));
 
 app.use(csurf());
+app.use(flash());
 app.use(constMiddleware);
 
 app.use(routerHome);

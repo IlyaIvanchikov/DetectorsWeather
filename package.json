@@ -9,14 +9,16 @@
     "build": "tsc --watch",
     "views": "cp -r ./views ./build/views",
     "public": "cp -r ./public ./build/public",
-    "fbuild": "npm run build && npm run views && npm run public"
+    "fbuild": "npm run views && npm run public"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/connect-flash": "0.0.35",
     "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^2.2.0",
     "csurf": "^1.10.0",
     "express": "^4.17.1",

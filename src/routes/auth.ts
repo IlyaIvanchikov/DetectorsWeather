@@ -7,7 +7,9 @@ router.get('/auth/login', async (req, res) => {
     res.render('auth/login',
     {
         title: "Авторизация",
-        isLogin: true
+        isLogin: true,
+        RegisterError: req.flash('RegisterError'),
+        LoginError: req.flash('LoginError')
     });
 });
 
@@ -34,10 +36,12 @@ router.post('/auth/login', async (req, res) => {
                 });
             }
             else {
+                req.flash('LoginError','Введен неверный пароль');
                 res.redirect('/auth/login#login');
             }
         }   
         else {
+            req.flash('LoginError','Такого пользователя не существует');
             res.redirect('/auth/login#login');
         }
     }
@@ -57,6 +61,7 @@ router.post('/auth/register', async (req, res) => {
         res.redirect('/auth/login#login');
       }
       else {
+          req.flash('RegisterError','Такой пользователь уже сушествует');
           res.redirect('/auth/login#register');
       }
     }

@@ -6,6 +6,9 @@
       </ul>
     </div>
 <div id="login" class="col s6 offset-s3">
+  {{#if LoginError}}
+  <p class="alert">{{LoginError}}</p>
+  {{/if}}
   <h1>Log in app</h1>
 <form action="/auth/login" method="POST">
     <div class="input-field">
@@ -25,6 +28,9 @@
 </form>  
     </div>
 <div id="register" class="col s6 offset-s3">
+  {{#if RegisterError}}
+  <p class="alert">{{RegisterError}}</p>
+  {{/if}}
 <form action="/auth/register" method="POST">
     <div class="input-field">
         <input placeholder="fio"  name="fio" id="fio" type="text" class="validate" required>
