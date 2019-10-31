@@ -1,6 +1,8 @@
 import Router  from 'express';
 import Detectors from '../models/detector';
 import auth from '../middleware/auth';
+import { sensorValidators } from '../utils/validators';
+import { validationResult } from 'express-validator';
 const router = Router();
 
 router.get('/sensors',  async (req, res) => {
@@ -17,7 +19,6 @@ router.get('/sensors/edit/:id', auth, async (req, res) => {
         return res.redirect('/');
     }
     const detector = await Detectors.findById(req.params.id);
-    console.log(detector);
     res.render('sensor-edit', {
         title: `Датчик ${detector.name_detector}`,
         layout: 'empty', 
@@ -34,8 +35,16 @@ router.get('/sensors/:id', async (req, res) => {
     });
 })
 
-router.post('/edit', auth, async (req, res) => {
+router.post('/edit', sensorValidators, auth, async (req:any, res:any) => {
+    
+    const error = validationResult(req);
     const { id } = req.body;
+
+    if(!error.isEmpty())
+    {
+        return res.status(422).redirect(`/sensors/edit/${id}?allow=true`);
+    }
+
     delete req.body.id;
     await Detectors.findOneAndUpdate({_id: id}, req.body);
     res.redirect('/sensors');

@@ -12,14 +12,16 @@
  import connectMongo = require('connect-mongodb-session');
  const MongoDBStore = connectMongo(session);
  import constMiddleware from './middleware/variables';
+ import keys from './keys';
+ import error404 from './middleware/404';
+ 
 
- const MONGODB_URI = 'mongodb+srv://IlyaIvanchikov:456455741852www))@weather-km4rd.mongodb.net/detector';
  const app = express();
 
 
   const store = new MongoDBStore({
     collection: 'sessions',
-    uri: MONGODB_URI
+    uri: keys.MONGODB_URI
 });
 
 app.engine('hbs', exphbs({
@@ -33,7 +35,7 @@ app.set('views', 'views');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended: true}));
 app.use(session({
-    secret: 'some secret value',
+    secret: keys.SECRET_SESSION,
     resave: false,
     saveUninitialized: false,
     store
@@ -47,12 +49,13 @@ app.use(routerHome);
 app.use('/add', routerAdd);
 app.use(routerSensors);
 app.use(routerLogin);
+app.use(error404);
 
  const PORT = process.env.PORT || 3000;
 
  const start = async () => {
     try {
-    await mongoose.connect(MONGODB_URI, {useNewUrlParser: true, 
+    await mongoose.connect(keys.MONGODB_URI, {useNewUrlParser: true, 
                                          useUnifiedTopology: true,
                                          useFindAndModify: false})
     app.listen(PORT, () => {
