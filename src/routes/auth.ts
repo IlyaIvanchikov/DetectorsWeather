@@ -1,10 +1,13 @@
 import Router  from 'express';
 import bcrypt from 'bcryptjs';
 import User from '../models/users';
+import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import { validationResult } from 'express-validator';
 import { registerValidators } from '../utils/validators';
 import regEmail from '../emails/registration';
+import resetEmail from '../emails/reset';
+import { userInfo } from 'os';
 
 const router = Router();
 const transporter = nodemailer.createTransport({
@@ -96,4 +99,84 @@ router.get('/auth/reset', (req, res) => {
     })
 });
 
+router.post('/auth/reset', (req, res) => {
+    try {
+    crypto.randomBytes(32, async (err, buffer) => {
+        if(err) {
+            req.flash('error', 'Что-то пошо не так попробуйте позже');
+            res.redirect('/auth/reset');
+        }
+            const tolen = buffer.toString('hex');
+            const candidate =  await User.findOne({ email: req.body.email });
+
+        if(candidate) {
+            candidate.resetTolen = tolen;
+            candidate.resetTolenExp = Date.now() + 60 * 60 * 1000;
+            await candidate.save();
+            await transporter.sendMail(resetEmail(candidate.email,tolen), (err, info) => {
+                if(err) {
+                    console.log(err);
+                }
+                console.log(info);
+            });
+            res.redirect('/auth/login');
+        }
+        else {
+            req.flash('error', 'Такого поьзоватея нет');
+            res.redirect('/auth/reset');
+        }
+    })
+}
+    catch(e) {
+        console.log(e);
+    }
+});
+
+router.get('/auth/password:tolen', async (req, res) => {
+        if (!req.params.tolen) {
+           return  res.redirect('/auth/reset');
+        }
+        try {      
+        const candidate =  await User.findOne({
+              resetTolen: req.params.tolen,
+              resetTolenExp: {$gt: Date.now()}
+        })
+        if (!candidate) {
+            res.redirect('/auth/login');
+        } else {
+            res.render('auth/password', {
+                    title: 'Restore access',
+                    error: req.flash('error'),
+                    userId: candidate._id.toString(),
+                    tolen: req.params.tolen
+            })
+        }
+    }
+    catch(e) {
+        console.log(e);
+    }
+});
+
+router.post('/auth/password', async (req, res) => {
+    try {
+        const candidate = User.findOne({
+                resetTolen: req.body.tolen,
+                _id: req.body.userId,
+                resetTolenExp: {$gt: Date.now()}
+        });
+        if(candidate) {
+            candidate.password =  await bcrypt.hash(req.body.password, 10);
+            candidate.resetTolen = undefined;
+            candidate.resetTolenExp = undefined;
+            candidate.save();
+            res.redirect('/auth/login');
+        } else {
+            req.flash('loginError', 'Token lifetime expired');
+            res.redirect('/auth/login');
+        }   
+    }
+    catch(e) {
+        console.log(e);
+    }
+});
 export default router;

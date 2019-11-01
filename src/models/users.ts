@@ -13,6 +13,8 @@ const users = new Schema({
         type: String,
         required: true
     },
+    resetTolen: String,
+    resetTolenExp: Date,
     password: {
         type: String,
         required: true
