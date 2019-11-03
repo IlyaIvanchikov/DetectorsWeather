@@ -7,7 +7,6 @@ import { validationResult } from 'express-validator';
 import { registerValidators } from '../utils/validators';
 import regEmail from '../emails/registration';
 import resetEmail from '../emails/reset';
-import { userInfo } from 'os';
 
 const router = Router();
 const transporter = nodemailer.createTransport({
@@ -132,7 +131,7 @@ router.post('/auth/reset', (req, res) => {
     }
 });
 
-router.get('/auth/password:tolen', async (req, res) => {
+router.get('/auth/password/:tolen', async (req, res) => {
         if (!req.params.tolen) {
            return  res.redirect('/auth/reset');
         }
@@ -159,7 +158,7 @@ router.get('/auth/password:tolen', async (req, res) => {
 
 router.post('/auth/password', async (req, res) => {
     try {
-        const candidate = User.findOne({
+        const candidate = await User.findOne({
                 resetTolen: req.body.tolen,
                 _id: req.body.userId,
                 resetTolenExp: {$gt: Date.now()}
@@ -168,10 +167,10 @@ router.post('/auth/password', async (req, res) => {
             candidate.password =  await bcrypt.hash(req.body.password, 10);
             candidate.resetTolen = undefined;
             candidate.resetTolenExp = undefined;
-            candidate.save();
+            await candidate.save();
             res.redirect('/auth/login');
         } else {
-            req.flash('loginError', 'Token lifetime expired');
+            req.flash('LoginError', 'Token lifetime expired');
             res.redirect('/auth/login');
         }   
     }

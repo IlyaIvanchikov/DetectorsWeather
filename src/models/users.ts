@@ -13,6 +13,7 @@ const users = new Schema({
         type: String,
         required: true
     },
+    avatarURL: String,
     resetTolen: String,
     resetTolenExp: Date,
     password: {

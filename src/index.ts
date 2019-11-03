@@ -6,6 +6,7 @@
  import routerHome from './routes/home';
  import routerAdd from './routes/add';
  import routerLogin from './routes/auth';
+ import profile from './routes/profile';
  import routerSensors from './routes/sensors';
  import mongoose from 'mongoose';
  import session from 'express-session';
@@ -49,6 +50,7 @@ app.use(routerHome);
 app.use('/add', routerAdd);
 app.use(routerSensors);
 app.use(routerLogin);
+app.use(profile);
 app.use(error404);
 
  const PORT = process.env.PORT || 3000;
