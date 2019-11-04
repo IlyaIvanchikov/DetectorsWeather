@@ -15,8 +15,9 @@
  import constMiddleware from './middleware/variables';
  import keys from './keys';
  import error404 from './middleware/404';
+ import userMiddleware from './middleware/user';
+ import fileMiddleware from './middleware/file';
  
-
  const app = express();
 
 
@@ -34,6 +35,7 @@ app.set('view engine', 'hbs');
 app.set('views', 'views');
 
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use('images', express.static(path.join(__dirname, 'images')));
 app.use(express.urlencoded({extended: true}));
 app.use(session({
     secret: keys.SECRET_SESSION,
@@ -41,10 +43,11 @@ app.use(session({
     saveUninitialized: false,
     store
 }));
-
+app.use(fileMiddleware.single('avatar'));
 app.use(csurf());
 app.use(flash());
 app.use(constMiddleware);
+app.use(userMiddleware);
 
 app.use(routerHome);
 app.use('/add', routerAdd);
