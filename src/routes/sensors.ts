@@ -10,6 +10,7 @@ router.get('/sensors',  async (req, res) => {
     res.render('sensors', {
         title: "Датчики",
         isSensors: true,
+        isDelete: false,
         detector
     });
 });
@@ -52,8 +53,8 @@ router.post('/edit', sensorValidators, auth, async (req:any, res:any) => {
 
 router.post('/delete', auth, async (req, res) => {
     try {
-        await Detectors.deleteOne({_id: req.body.id});
-        res.redirect('/sensors');
+            await Detectors.deleteOne({_id: req.body.id});
+            res.redirect('/sensors');
     }
     catch(e) {
     console.log(e);

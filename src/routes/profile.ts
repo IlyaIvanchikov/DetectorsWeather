@@ -21,13 +21,13 @@ router.post('/profile', auth, async (req, res) => {
 
          const toChange = {
                fio: req.body.fio,
-               // avatarURL: ''
+               avatarURL: ''
         };
 
          console.log(req.file);
 
          if (req.file) {
-            //  toChange.avatarURL = '';
+            toChange.avatarURL = req.file.destination + '/' + req.file.filename;
          }
         
         Object.assign(candidate, toChange);

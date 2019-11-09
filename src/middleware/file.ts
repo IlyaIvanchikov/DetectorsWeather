@@ -5,11 +5,11 @@ const storage = multer.diskStorage({
         cb(null, 'images');
       },
       filename: function (req, file, cb) {
-        cb(null, new Date().toISOString() + '-' + file.originalname);
+        cb(null, file.originalname);
       }
     });
 
-const allowedType = ['image/png', 'image/gpg', 'image/gpeg'];
+const allowedType = ['image/png', 'image/jpg', 'image/jpeg'];
 
 const fileFilter  = (req: Express.Request, file: Express.Multer.File, callback: (error: Error | null, acceptFile: boolean) => void) => {
     if (allowedType.includes(file.mimetype)) {
