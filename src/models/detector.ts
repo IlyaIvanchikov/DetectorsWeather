@@ -12,6 +12,11 @@ const detectors = new Schema({
     producing_country: {
         type: String,
         required: true
+    },
+    locationDetectorId: {
+        type: Schema.types.ObjectId,
+        require,
+        ref: "LocationDetector"
     }
 });
 

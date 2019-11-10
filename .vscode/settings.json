@@ -1,4 +1,23 @@
 {
-    // "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe"
-    "terminal.integrated.shell.windows": "D:\\JS EPAM\\Git\\bin\\bash.exe"
+        // "terminal.integrated.shell.windows": "D:\\EPAM\\Git\\bin\\bash.exe"
+   "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+   "cSpell.words": [
+      "csrf",
+      "downlevel",
+      "eather",
+      "esnext",
+      "hoverable",
+      "interop",
+      "iteration",
+      "sourcemap",
+      "statew",
+      "tslib",
+      "typechecking",
+      "датчики",
+      "открыть",
+      "отсутствуют",
+      "редактировать",
+      "удалить"
+   ]
+   // "terminal.integrated.shell.windows": "D:\\JS EPAM\\Git\\bin\\bash.exe"
 }
