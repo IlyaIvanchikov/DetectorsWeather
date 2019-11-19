@@ -1,23 +1,25 @@
-const {Schema, model} = require('mongoose');
+import { Sequelize, Model, DataTypes, BuildOptions } from 'sequelize';
+import sequelize from '../utils/sequilize';
 
-const detectors = new Schema({
+const detector = sequelize.define("Detector", {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false,
+    },
     model_detector: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false
     }, 
     name_detector: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false
     }, 
     producing_country: {
-        type: String,
-        required: true
-    },
-    locationDetectorId: {
-        type: Schema.types.ObjectId,
-        require,
-        ref: "LocationDetector"
+        type: DataTypes.STRING,
+        allowNull: false
     }
 });
 
-export default model('Detectors', detectors);
+export detector extends Model<detector> {}
