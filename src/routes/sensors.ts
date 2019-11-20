@@ -1,5 +1,5 @@
 import Router  from 'express';
-import Model.detector from '../models/detector';
+import Detector from '../models/detector';
 import { Sequelize, Model, DataTypes, BuildOptions } from 'sequelize';
 // import auth from '../middleware/auth';
 // import { sensorValidators } from '../utils/validators';
@@ -7,12 +7,12 @@ import { Sequelize, Model, DataTypes, BuildOptions } from 'sequelize';
 const router = Router();
 
 router.get('/sensors',  async (req, res) => {
-    const detectors = await detector.findAll();
+    const detector = await Detector.findAll();
     res.render('sensors', {
         title: "Датчики",
         isSensors: true,
         isDelete: false,
-        detectors
+        detector
     });
 });
 

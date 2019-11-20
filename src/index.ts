@@ -52,7 +52,7 @@ app.use(express.urlencoded({extended: true}));
 // app.use(userMiddleware);
 
 app.use(routerHome);
-// app.use('/add', routerAdd);
+app.use('/add', routerAdd);
 app.use(routerSensors);
 // app.use(routerLogin);
 // app.use(profile);

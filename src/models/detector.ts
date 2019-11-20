@@ -1,7 +1,14 @@
 import { Sequelize, Model, DataTypes, BuildOptions } from 'sequelize';
 import sequelize from '../utils/sequilize';
 
-const detector = sequelize.define("Detector", {
+interface MyModel extends Model {
+    readonly id: number;
+};
+  type MyModelStatic = typeof Model & {
+    new (values?: object, options?: BuildOptions): MyModel;
+};
+
+const detector = <MyModelStatic>sequelize.define("detector", {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -22,4 +29,4 @@ const detector = sequelize.define("Detector", {
     }
 });
 
-export detector extends Model<detector> {}
+export default detector;
