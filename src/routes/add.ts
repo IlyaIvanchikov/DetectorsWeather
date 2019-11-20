@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req:any, res:any) => {
     try {
-      Detector.create({
+        await Detector.create({
         model_detector: req.body.model_detector,
         name_detector: req.body.name_detector,
         producing_country: req.body.producing_country  

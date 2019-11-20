@@ -16,51 +16,60 @@ router.get('/sensors',  async (req, res) => {
     });
 });
 
-// router.get('/sensors/edit/:id', auth, async (req, res) => {
-//     if (!req.query.allow) {
-//         return res.redirect('/');
-//     }
-//     const detector = await Detectors.findById(req.params.id);
-//     res.render('sensor-edit', {
-//         title: `Датчик ${detector.name_detector}`,
-//         layout: 'empty', 
-//         detector
-//     })
-// });
+router.get('/sensors/edit/:id', async (req, res) => {
+    if (!req.query.allow) {
+        return res.redirect('/');
+    }
+    const detector = await Detector.findByPk(req.params.id);
+    if (detector !== null) {
+    res.render('sensor-edit', {
+        title: `Датчик ${detector.name_detector}`,
+        layout: 'empty', 
+        detector
+    })
+  }
+});
 
-// router.get('/sensors/:id', async (req, res) => {
-//     const detector = await Detectors.findById(req.params.id);
-//     res.render('sensor', {
-//         title: `Датчик ${detector.name_detector}`,
-//         layout: 'empty', 
-//         detector
-//     });
-// })
+router.get('/sensors/:id', async (req, res) => {
+    const detector = await Detector.findByPk(req.params.id);
+    if (detector !== null) {
+        res.render('sensor', {
+            title: `Датчик ${detector.name_detector}`,
+            layout: 'empty', 
+            detector
+        });
+    }
 
-// router.post('/edit', sensorValidators, auth, async (req:any, res:any) => {
-    
-//     const error = validationResult(req);
-//     const { id } = req.body;
+})
 
-//     if(!error.isEmpty())
-//     {
-//         return res.status(422).redirect(`/sensors/edit/${id}?allow=true`);
-//     }
+router.post('/edit', async (req:any, res:any) => {
 
-//     delete req.body.id;
-//     await Detectors.findOneAndUpdate({_id: id}, req.body);
-//     res.redirect('/sensors');
-// })
+    if(!req.body) return res.sendStatus(400);
+    const { id } = req.body;
 
-// router.post('/delete', auth, async (req, res) => {
-//     try {
-//             await Detectors.deleteOne({_id: req.body.id});
-//             res.redirect('/sensors');
-//     }
-//     catch(e) {
-//     console.log(e);
-//     }
+    delete req.body.id;
+    const name_detector = req.body.name_detector;
+    const producing_country = req.body.producing_country;
+    const model_detector = req.body.model_detector;
+    await Detector.update({name_detector, 
+                           producing_country, 
+                           model_detector}, { where: {
+                           id  }
+                           });
+    res.redirect('/sensors');
+})
 
-// })
+router.post('/delete', async (req, res) => {
+    try {
+            await Detector.destroy({
+                    where: {
+                     id: req.body.id}});
+            res.redirect('/sensors');
+    }
+    catch(e) {
+    console.log(e);
+    }
+
+})
 
 export default router;

@@ -11,14 +11,12 @@
         </div>
         <div class="card-action">
           <a href="/sensors/{{id}}" target="__blank">Открыть</a>
-          {{#if @root.isAuth}}
           <a href="/sensors/edit/{{id}}?allow=true">Редактировать</a>
           <form action="/delete" method="POST" onSubmit="if(confirm('Are you sure?')) {this.submit;} else {return false;}">
           <input type="hidden" name="id" value="{{id}}">
           <button type="submit" class="btn btn-primary">Удалить</button>
           <input type="hidden" name="_csrf" value="{{@root.csrf}}">
           </form>
-          {{/if}}
         </div>
       </div>
     </div>

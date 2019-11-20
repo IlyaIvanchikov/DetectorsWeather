@@ -2,7 +2,8 @@ import { Sequelize, Model, DataTypes, BuildOptions } from 'sequelize';
 import sequelize from '../utils/sequilize';
 
 interface MyModel extends Model {
-    readonly id: number;
+    readonly id: number,
+    readonly name_detector: string;
 };
   type MyModelStatic = typeof Model & {
     new (values?: object, options?: BuildOptions): MyModel;
