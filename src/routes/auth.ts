@@ -21,7 +21,7 @@ const transporter = nodemailer.createTransport({
 router.get('/auth/login', async (req, res) => {
     res.render('auth/login',
     {
-        title: "Авторизация",
+        title: "Authorization",
         isLogin: true,
         RegisterError: req.flash('RegisterError'),
         LoginError: req.flash('LoginError')
@@ -37,7 +37,7 @@ router.get('/auth/logout', async (req, res) => {
 router.post('/auth/login', async (req, res) => {
     try {
         const {login, password} = req.body;
-        const candidate = await User.findOne({ login });
+        const candidate = await User.findOne({ where: { login }});
         if (candidate) {
             const areSome = await bcrypt.compare(password, candidate.password);
             if (areSome) {

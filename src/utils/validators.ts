@@ -8,7 +8,7 @@ export const registerValidators =  [
     check('login', "Минимально 3 символа для login").isLength({min: 3})
     .custom(async (value, {req}) => {
         try {
-            const candidate = await User.findOne({ login: value });
+            const candidate = await User.findOne({ where: {login: value }});
                 if(candidate) {
                 return Promise.reject('Такой пользователь уже существует');
             }

@@ -5,6 +5,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     if (!req!.session!.user) {
         return next();
     }
-    req.body.user =  await User.findById(req!.session!.user._id);
+    req.body.user =  await User.findByPk(req!.session!.user.id);
     next();
 }

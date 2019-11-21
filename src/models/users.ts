@@ -1,29 +1,55 @@
-const {Schema, model} = require('mongoose');
+import { Sequelize, Model, DataTypes, BuildOptions } from 'sequelize';
+import sequelize from '../utils/sequilize';
 
-const users = new Schema({
+interface ModelUser extends Model {
+    readonly id: number,
+    readonly password: string,
+};
+
+  type MyModeUserlStatic = typeof Model & {
+    new (values?: object, options?: BuildOptions): ModelUser;
+};
+
+const user = <MyModeUserlStatic>sequelize.define("user", {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false,
+    },
     fio: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     login: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     email: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
-    avatarURL: String,
-    resetTolen: String,
-    resetTolenExp: Date,
+    avatarURL: {
+        type: DataTypes.STRING
+    },
+    resetTolen: {
+        type: DataTypes.STRING
+    },
+    resetTolenExp: {
+        type: DataTypes.DATE
+    },
     password: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     confirm: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
+    role: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
 });
 
-export default model('Users', users);
+export default user;

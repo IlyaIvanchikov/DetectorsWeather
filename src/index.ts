@@ -11,9 +11,8 @@
  import profile from './routes/profile';
  import routerSensors from './routes/sensors';
 //  import mongoose from 'mongoose';
-//  import session from 'express-session';
-//  import connectMongo = require('connect-mongodb-session');
-//  const MongoDBStore = connectMongo(session);
+ import session from 'express-session';
+ const MySQLStore = require('express-mysql-session')(session);
  import constMiddleware from './middleware/variables';
  import keys from './keys';
  import error404 from './middleware/404';
@@ -23,10 +22,9 @@
  const app = express();
 
 
-//   const store = new MongoDBStore({
-//     collection: 'sessions',
-//     uri: keys.MONGODB_URI
-// });
+  const store = new MySQLStore({
+    collection: sequelize
+});
 
 app.engine('hbs', exphbs({
     defaultLayout: 'main',
@@ -39,12 +37,12 @@ app.set('views', 'views');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(express.urlencoded({extended: true}));
-// app.use(session({
-//     secret: keys.SECRET_SESSION,
-//     resave: false,
-//     saveUninitialized: false,
-//     store
-// }));
+app.use(session({
+    secret: keys.SECRET_SESSION,
+    resave: false,
+    saveUninitialized: false,
+    store
+}));
 // app.use(fileMiddleware.single('avatar'));
 // app.use(csurf());
 // app.use(flash());
@@ -56,7 +54,7 @@ app.use('/add', routerAdd);
 app.use(routerSensors);
 // app.use(routerLogin);
 // app.use(profile);
-// app.use(error404);
+app.use(error404);
 
  const PORT = process.env.PORT || 3000;
 
