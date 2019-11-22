@@ -29,9 +29,9 @@ router.get('/auth/login', async (req, res) => {
 });
 
 router.get('/auth/logout', async (req, res) => {
-    req!.session!.destroy(() => {
+     req.session!.destroy(() => {
      res.redirect('/auth/login#login');
-    })
+    });
 });
 
 router.post('/auth/login', async (req, res) => {
@@ -67,7 +67,7 @@ router.post('/auth/login', async (req, res) => {
 
 router.post('/auth/register', registerValidators, async (req:any, res:any) => {
     try {
-    const {fio, login, email, password, confirm} = req.body;
+    const {fio, login, email, password, confirm, role} = req.body;
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -75,9 +75,7 @@ router.post('/auth/register', registerValidators, async (req:any, res:any) => {
         return res.status(422).redirect('/auth/login#register');
       }
         const passwordBcryptsjs =  await bcrypt.hash(password, 10);
-        const user = new User({ fio, login, email, password: passwordBcryptsjs, confirm });
-        await user.save();
-
+        await User.create({fio, login, email, password: passwordBcryptsjs, confirm, role});
         res.redirect('/auth/login#login');
         transporter.sendMail(regEmail(email), (err, info) => {
             if(err) {
@@ -106,7 +104,7 @@ router.post('/auth/reset', (req, res) => {
             res.redirect('/auth/reset');
         }
             const tolen = buffer.toString('hex');
-            const candidate =  await User.findOne({ email: req.body.email });
+            const candidate =  await User.findOne({ where: {email: req.body.email }});
 
         if(candidate) {
             candidate.resetTolen = tolen;
@@ -136,9 +134,10 @@ router.get('/auth/password/:tolen', async (req, res) => {
            return  res.redirect('/auth/reset');
         }
         try {      
-        const candidate =  await User.findOne({
+        const candidate =  await User.findOne({ where: {
+
               resetTolen: req.params.tolen,
-              resetTolenExp: {$gt: Date.now()}
+              resetTolenExp: {$gt: Date.now()}}
         })
         if (!candidate) {
             res.redirect('/auth/login');
@@ -146,7 +145,7 @@ router.get('/auth/password/:tolen', async (req, res) => {
             res.render('auth/password', {
                     title: 'Restore access',
                     error: req.flash('error'),
-                    userId: candidate._id.toString(),
+                    userId: candidate.id.toString(),
                     tolen: req.params.tolen
             })
         }
@@ -158,10 +157,10 @@ router.get('/auth/password/:tolen', async (req, res) => {
 
 router.post('/auth/password', async (req, res) => {
     try {
-        const candidate = await User.findOne({
+        const candidate = await User.findOne({ where: {
                 resetTolen: req.body.tolen,
-                _id: req.body.userId,
-                resetTolenExp: {$gt: Date.now()}
+                id: req.body.userId,
+                resetTolenExp: {$gt: Date.now()}}
         });
         if(candidate) {
             candidate.password =  await bcrypt.hash(req.body.password, 10);

@@ -2,36 +2,33 @@ import Router  from 'express';
 import auth from '../middleware/auth';
 import User from '../models/users';
 
-
 const router = Router();
 
 router.get('/profile', auth, async (req, res) => {
     res.render('profile', {
         title:  'Profile',
         isProfile: true,
-        user: req.body.user.toObject(),
+        user: req.body.user,
     })
-     console.log(req.body.user.avatarURL);
-    // console.log(req.body.user.toObject());
 });
 
 router.post('/profile', auth, async (req, res) => {
     try {
-        const candidate = await User.findById(req.body.user._id);
-
+        const candidate = await User.findByPk(req.body.user.id);
+        console.log(candidate);
          const toChange = {
                fio: req.body.fio,
                avatarURL: ''
         };
-
-         console.log(req.file);
 
          if (req.file) {
             toChange.avatarURL = req.file.destination + '/' + req.file.filename;
          }
         
         Object.assign(candidate, toChange);
+        if( candidate !=  null) {
         await candidate.save();
+        }
         res.redirect('/profile');
     }
     catch(e) {

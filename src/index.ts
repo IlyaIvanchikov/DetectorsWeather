@@ -12,7 +12,7 @@
  import routerSensors from './routes/sensors';
 //  import mongoose from 'mongoose';
  import session from 'express-session';
- const MySQLStore = require('express-mysql-session')(session);
+ const MySQLStore = require('express-session-sequelize')(session.Store);
  import constMiddleware from './middleware/variables';
  import keys from './keys';
  import error404 from './middleware/404';
@@ -21,9 +21,8 @@
  
  const app = express();
 
-
   const store = new MySQLStore({
-    collection: sequelize
+    db: sequelize
 });
 
 app.engine('hbs', exphbs({
@@ -43,17 +42,17 @@ app.use(session({
     saveUninitialized: false,
     store
 }));
-// app.use(fileMiddleware.single('avatar'));
-// app.use(csurf());
-// app.use(flash());
-// app.use(constMiddleware);
-// app.use(userMiddleware);
+app.use(fileMiddleware.single('avatar'));
+app.use(csurf());
+app.use(flash());
+app.use(constMiddleware);
+app.use(userMiddleware);
 
 app.use(routerHome);
 app.use('/add', routerAdd);
 app.use(routerSensors);
-// app.use(routerLogin);
-// app.use(profile);
+app.use(routerLogin);
+app.use(profile);
 app.use(error404);
 
  const PORT = process.env.PORT || 3000;

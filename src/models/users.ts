@@ -3,7 +3,10 @@ import sequelize from '../utils/sequilize';
 
 interface ModelUser extends Model {
     readonly id: number,
-    readonly password: string,
+    password: string,
+    readonly email: string,
+    resetTolen: string | undefined,
+    resetTolenExp: number | undefined
 };
 
   type MyModeUserlStatic = typeof Model & {
