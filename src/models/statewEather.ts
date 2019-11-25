@@ -1,6 +1,6 @@
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const statewEather = new Schema ({
+const statewEather = new Schema({
     pressure: {
         type: Float32Array,
         require,
