@@ -1,6 +1,6 @@
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const locationDetector = new Schema ({
+const locationDetector = new Schema({
     latitude: {
         type: String,
         require,

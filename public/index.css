@@ -2,9 +2,10 @@
     font-size: 3rem;
     color: black;
 }
+
 .sensor h1 {
     margin-bottom: 2rem;
-    background-color:red;
+    background-color: red;
 }
 
 .sensor p {
