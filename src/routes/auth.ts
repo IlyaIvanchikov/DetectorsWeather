@@ -68,10 +68,10 @@ router.post('/auth/login', async (req, res) => {
 router.post('/auth/register', registerValidators, async (req:any, res:any) => {
     try {
     const {fio, login, email, password, confirm, role} = req.body;
-    const errors = validationResult(req);
+    const errors = await validationResult(req);
 
     if (!errors.isEmpty()) {
-        req.flash('RegisterError', errors.array()[0].msg);
+        req.flash('RegisterError', await errors.array()[0].msg);
         return res.status(422).redirect('/auth/login#register');
       }
         const passwordBcryptsjs =  await bcrypt.hash(password, 10);

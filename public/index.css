@@ -1,3 +1,7 @@
+body {
+    font-family: 'Niconne', cursive;
+}
+
 .card-title.name_detector {
     font-size: 3rem;
     color: black;
@@ -14,6 +18,7 @@
 
 nav .brand-logo {
     font-size: 3vw;
+    padding-left: 1em;
 }
 
 
@@ -32,4 +37,8 @@ nav .brand-logo {
 .avatar {
     max-width: 300px;
     height: auto;
+}
+
+.tabs {
+    margin-bottom: 1em;
 }
