@@ -32,11 +32,17 @@ router.get('/sensors/edit/:id', auth, async (req, res) => {
 
 router.get('/sensors/:id', async (req, res) => {
     const detector = await Detector.findByPk(req.params.id);
+
+     fetch('https://api.openweathermap.org/data/2.5/weather?q=Minsk&appid=155bc6fb09325aed51a899514754ed0a')
+      .then(res => res.json())
+     .then(json => console.log(json));
+
     if (detector !== null) {
         res.render('sensor', {
             title: `Датчик ${detector.location}`,
             layout: 'empty', 
-            detector
+            detector,
+
         });
     }
 
