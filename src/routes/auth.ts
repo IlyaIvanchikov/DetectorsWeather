@@ -68,10 +68,10 @@ router.post('/auth/login', async (req, res) => {
 router.post('/auth/register', registerValidators, async (req:any, res:any) => {
     try {
     const {fio, login, email, password, confirm, role} = req.body;
-    const errors = await validationResult(req);
+    const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        req.flash('RegisterError', await errors.array()[0].msg);
+        req.flash('RegisterError', errors.array()[0].msg);
         return res.status(422).redirect('/auth/login#register');
       }
         const passwordBcryptsjs =  await bcrypt.hash(password, 10);
@@ -110,8 +110,8 @@ router.post('/auth/reset', (req, res) => {
             candidate.resetTolen = tolen;
             candidate.resetTolenExp = Date.now() + 60 * 60 * 1000;
             await candidate.save();
-            await transporter.sendMail(resetEmail(candidate.email,tolen), (err, info) => {
-                if(err) {
+            transporter.sendMail(resetEmail(candidate.email, tolen), (err, info) => {
+                if (err) {
                     console.log(err);
                 }
                 console.log(info);
@@ -119,7 +119,7 @@ router.post('/auth/reset', (req, res) => {
             res.redirect('/auth/login');
         }
         else {
-            req.flash('error', 'Такого поьзоватея нет');
+            req.flash('error', 'Такого пользоватея нет');
             res.redirect('/auth/reset');
         }
     })

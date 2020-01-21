@@ -1,8 +1,4 @@
-body {
-    font-family: 'Niconne', cursive;
-}
-
-.card-title.name_detector {
+.card-title.location {
     font-size: 3rem;
     color: black;
 }
@@ -18,9 +14,7 @@ body {
 
 nav .brand-logo {
     font-size: 3vw;
-    padding-left: 1em;
 }
-
 
 .auth {
     padding-top: 1rem;
@@ -39,6 +33,22 @@ nav .brand-logo {
     height: auto;
 }
 
-.tabs {
-    margin-bottom: 1em;
+.brandLogo {
+    margin-left: 1em;
+}
+
+body {
+    font-family: 'Niconne', cursive; 
+    background-image: url('https://images.wallpaperscraft.ru/image/trava_pole_zelenyj_117297_1920x1080.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* .cardFlex {
+    display: flex;
+    flex-direction: row;
+} */
+
+.formCard {
+    display: inline;
 }

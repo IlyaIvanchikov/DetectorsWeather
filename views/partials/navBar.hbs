@@ -1,24 +1,24 @@
   <nav>
     <div class="nav-wrapper">
-      <a href="/" class="brand-logo">Weather all day!</a>
+      <a href="/" class="brand-logo brandLogo">Weather all day!</a>
       <a href="/" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
         {{#if isHome}}
-        <li class="active"><a href="/">Главная</a></li>
+        <li class="active"><a href="/">Main</a></li>
         {{else}}
-        <li><a href="/">Главная</a></li>
+        <li><a href="/">Main</a></li>
         {{/if}}
 
         {{#if isSensors}}
-        <li class="active"><a href="/sensors">Датчики</a></li>
+        <li class="active"><a href="/sensors">Sensors</a></li>
         {{else}}
-        <li><a href="/sensors">Датчики</a></li>
+        <li><a href="/sensors">Sensors</a></li>
         {{/if}}
         {{#if isAuth}}
             {{#if isAdd}}
-            <li class="active"><a href="/add">Добавить датчик</a></li>
+            <li class="active"><a href="/add">Add sensor</a></li>
             {{else}}
-            <li><a href="/add">Добавить датчик</a></li>
+            <li><a href="/add">Add sensor</a></li>
             {{/if}}
               {{#if isProfile}}
               <li class="active"><a href="/profile">Profile</a></li>
@@ -28,9 +28,9 @@
             <li><a href="auth/logout">Logout</a></li>
           {{else}}
           {{#if isLogin}}
-          <li class="active"><a href="/auth/login#login">Авторизация</a></li>
+          <li class="active"><a href="/auth/login#login">Authorization</a></li>
           {{else}}
-          <li><a href="/auth/login#login">Авторизация</a></li>
+          <li><a href="/auth/login#login">Authorization</a></li>
           {{/if}}
         {{/if}}
       </ul>

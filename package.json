@@ -7,10 +7,11 @@
   "scripts": {
     "debugger": "node --inspect=5858 -r ts-node/register ./src/index.ts",
     "start": "nodemon build/index.js",
-    "build": "tsc --watch",
+    "build": "tsc --w",
+    "dfolders": "rm -r ./build/views && rm -r ./build/public",
     "views": "cp -r ./views ./build/views",
     "public": "cp -r ./public ./build/public",
-    "fbuild": "npm run views && npm run public"
+    "fbuild": "npm run dfolders && npm run views && npm run public"
   },
   "keywords": [],
   "author": "",

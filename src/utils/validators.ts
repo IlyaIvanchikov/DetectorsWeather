@@ -37,10 +37,6 @@ export const registerValidators =  [
 ];
 
 export const sensorValidators = [
-    check('model_detector', 'Минимальное количество символов 2').isLength({ min: 2})
-    .trim(),
-    check('name_detector', 'Минимальное количество символов 2').isLength({ min: 2})
-    .trim(),
-    check('producing_country', 'Минимальное количество символов 2').isLength({ min: 2})
+    check('location', 'Минимальное количество символов 2').isLength({ min: 2})
     .trim(),
 ];

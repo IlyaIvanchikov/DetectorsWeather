@@ -22,17 +22,13 @@ router.post('/', sensorValidators, auth, async (req:any, res:any) => {
         isAdd: true,
         error: error.array()[0].msg,
         data: {
-          model_detector: req.body.model_detector,
-          name_detector: req.body.name_detector,
-          producing_country: req.body.producing_country
+          location: req.body.location,
         }
       })
     }
     try {
         await Detector.create({
-        model_detector: req.body.model_detector,
-        name_detector: req.body.name_detector,
-        producing_country: req.body.producing_country  
+        location: req.body.location,
       })
       res.redirect('/sensors');
     }

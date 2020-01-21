@@ -4,7 +4,7 @@ import sequelize from '../utils/sequilize';
 
 interface MyModel extends Model {
     readonly id: number,
-    readonly name_detector: string;
+    readonly location: string;
 };
 
   type MyModelStatic = typeof Model & {
@@ -18,15 +18,7 @@ const detector = <MyModelStatic>sequelize.define("detector", {
         primaryKey: true,
         allowNull: false,
     },
-    model_detector: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }, 
-    name_detector: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }, 
-    producing_country: {
+    location: {
         type: DataTypes.STRING,
         allowNull: false
     }

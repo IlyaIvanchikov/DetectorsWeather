@@ -23,7 +23,7 @@ router.get('/sensors/edit/:id', auth, async (req, res) => {
     const detector = await Detector.findByPk(req.params.id);
     if (detector !== null) {
     res.render('sensor-edit', {
-        title: `Датчик ${detector.name_detector}`,
+        title: `Датчик ${detector.location}`,
         layout: 'empty', 
         detector
     })
@@ -34,7 +34,7 @@ router.get('/sensors/:id', async (req, res) => {
     const detector = await Detector.findByPk(req.params.id);
     if (detector !== null) {
         res.render('sensor', {
-            title: `Датчик ${detector.name_detector}`,
+            title: `Датчик ${detector.location}`,
             layout: 'empty', 
             detector
         });
@@ -48,12 +48,8 @@ router.post('/edit', sensorValidators, auth, async (req:any, res:any) => {
     const { id } = req.body;
 
     delete req.body.id;
-    const name_detector = req.body.name_detector;
-    const producing_country = req.body.producing_country;
-    const model_detector = req.body.model_detector;
-    await Detector.update({name_detector, 
-                           producing_country, 
-                           model_detector}, { where: {
+    const location = req.body.location;
+    await Detector.update({location}, { where: {
                            id  }
                            });
     res.redirect('/sensors');
