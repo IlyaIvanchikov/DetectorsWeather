@@ -35,18 +35,15 @@ router.get('/sensors/edit/:id', auth, async (req, res) => {
 router.get('/sensors/:id', async (req, res) => {
     const detector = await Detector.findByPk(req.params.id);
 
-    console.log('hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello');
-    const url = (`https://api.openweathermap.org/data/2.5/weather?q=Minsk&appid=${keys.API_URL}`);
-    const resp = await fetch(url);
-    const myJson = await resp.json();
-    console.log(myJson.main.temp);
-    console.log(JSON.stringify(myJson));
     if (detector !== null) {
+        const urlWeather = (`https://api.openweathermap.org/data/2.5/weather?q=${detector.location}&appid=${keys.API_URL}`);
+        const resp = await fetch(urlWeather);
+        const mySity = await resp.json();
         res.render('sensor', {
             title: `Датчик ${detector.location}`,
             layout: 'empty', 
             detector,
-            t: myJson.main.temp,
+            mySity
         });
     }
 
