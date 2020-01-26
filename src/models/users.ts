@@ -49,10 +49,6 @@ const user = <MyModeUserlStatic>sequelize.define("user", {
         type: DataTypes.STRING,
         allowNull: false
     },
-    role: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
 });
 
 export default user;

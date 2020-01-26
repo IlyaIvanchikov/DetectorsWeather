@@ -3,8 +3,8 @@
     color: black;
 }
 .sensor h1 {
-    margin-bottom: 2rem;
-    background-color:red;
+    margin-bottom: 3rem;
+    font-weight: bold;
 }
 
 .sensor p {
@@ -18,14 +18,7 @@ nav .brand-logo {
 
 .auth {
     padding-top: 1rem;
-}
-
-.alert {
-    padding: .5rem 1rem;
-    background: rgba(255, 0, 0, .3);
-    text-align: center;
-    border-radius: 10px;
-    margin-bottom: 1rem;
+    font-family: 'Niconne', cursive; 
 }
 
 .avatar {
@@ -44,11 +37,61 @@ body {
     background-repeat: no-repeat;
 }
 
-/* .cardFlex {
-    display: flex;
-    flex-direction: row;
-} */
+td, th {
+    color: white;
+    font-size: 2em;
+}
 
 .formCard {
     display: inline;
 }
+
+a > p {
+    color:khaki;
+    font-size: 2em;
+}
+
+/*----------------------- ОШИБКИ ------------------------------ */
+
+.alert {
+    padding: .5rem 1rem;
+    background: rgba(255, 0, 0, .5);
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.sensor .alertSensor {
+    padding: .5rem 1rem;
+    background: rgba(255, 0, 0, .5);
+    text-align: center;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+}
+
+/*----------------------- LOG IN ------------------------------ */
+#login h1 {
+    margin-bottom: 1.5em;
+    color: black;
+}
+
+.tabs .tab a {
+    color:black;
+    font-size: 2em;
+}
+
+.tabs {
+    border-radius: 20px;
+}
+
+#login, #password, #fio, #relogin, #email, #repassword, #confirm {
+    color: rgb(190, 202, 224);
+    font-size: 1.8rem;
+}
+
+#label {
+    color: white;
+    font-size: 1.5rem;
+}
+
+

@@ -11,6 +11,6 @@ export default ( email:string, tolen:string ) => {
     <p>Otherwise click below:</p>
     <p><a href="${keys.BASE_URL}/auth/password/${tolen}">Restore access</a></p>
     <hr />
-    <a href=${keys.BASE_URL}>Погодное приложение</a>`
+    <a href=${keys.BASE_URL}>Weather application</a>`
    }
 }

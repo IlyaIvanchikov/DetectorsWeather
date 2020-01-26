@@ -38,13 +38,25 @@ router.get('/sensors/:id', async (req, res) => {
     if (detector !== null) {
         const urlWeather = (`https://api.openweathermap.org/data/2.5/weather?q=${detector.location}&appid=${keys.API_URL}`);
         const resp = await fetch(urlWeather);
-        const mySity = await resp.json();
-        res.render('sensor', {
-            title: `Датчик ${detector.location}`,
-            layout: 'empty', 
-            detector,
-            mySity
-        });
+        try {
+            const mySity = await resp.json();
+            const temp = Math.trunc(mySity.main.temp - 273.15);
+            res.render('sensor', {
+                title: `Датчик ${detector.location}`,
+                layout: 'empty', 
+                detector,
+                mySity,
+                temp
+            });
+        }
+        catch {
+            res.render('sensor', {
+                title: `Датчик ${detector.location}`,
+                layout: 'empty', 
+                detector,
+            });
+        }
+
     }
 
 })

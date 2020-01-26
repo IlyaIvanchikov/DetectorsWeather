@@ -13,8 +13,8 @@ const transporter = nodemailer.createTransport({
     host: 'smtp.mailtrap.io',
     port: 2525,
     auth: {
-        user: '8649b9dce8cbd9',
-        pass: '48fca78c216ed1'
+        user: 'ca45bf9cd12e9a',
+        pass: 'f444b40921548f'
      }
 });
 
@@ -67,7 +67,7 @@ router.post('/auth/login', async (req, res) => {
 
 router.post('/auth/register', registerValidators, async (req:any, res:any) => {
     try {
-    const {fio, login, email, password, confirm, role} = req.body;
+    const {fio, login, email, password, confirm} = req.body;
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -75,7 +75,7 @@ router.post('/auth/register', registerValidators, async (req:any, res:any) => {
         return res.status(422).redirect('/auth/login#register');
       }
         const passwordBcryptsjs =  await bcrypt.hash(password, 10);
-        await User.create({fio, login, email, password: passwordBcryptsjs, confirm, role});
+        await User.create({fio, login, email, password: passwordBcryptsjs, confirm});
         res.redirect('/auth/login#login');
         transporter.sendMail(regEmail(email), (err, info) => {
             if(err) {
@@ -100,7 +100,7 @@ router.post('/auth/reset', (req, res) => {
     try {
     crypto.randomBytes(32, async (err, buffer) => {
         if(err) {
-            req.flash('error', 'Что-то пошо не так попробуйте позже');
+            req.flash('error', 'Что-то пошло не так попробуйте позже');
             res.redirect('/auth/reset');
         }
             const tolen = buffer.toString('hex');
@@ -119,7 +119,7 @@ router.post('/auth/reset', (req, res) => {
             res.redirect('/auth/login');
         }
         else {
-            req.flash('error', 'Такого пользоватея нет');
+            req.flash('error', 'Такого пользователя нет');
             res.redirect('/auth/reset');
         }
     })
