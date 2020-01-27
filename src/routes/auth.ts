@@ -8,6 +8,7 @@ import { validationResult } from 'express-validator';
 import { registerValidators } from '../utils/validators';
 import regEmail from '../emails/registration';
 import resetEmail from '../emails/reset';
+import { Sequelize, Model, DataTypes, BuildOptions, Op } from 'sequelize';
 
 const router = Router();
 const transporter = nodemailer.createTransport({
@@ -92,7 +93,7 @@ router.post('/auth/register', registerValidators, async (req: Request, res: Resp
 
 router.get('/auth/reset', (req, res) => {
     res.render('auth/reset', {
-       title: 'Забыли пароль?',
+       title: 'Forgot your password?',
        error: req.flash('error')
     })
 });
@@ -138,7 +139,8 @@ router.get('/auth/password/:tolen', async (req, res) => {
         const candidate =  await User.findOne({ where: {
 
               resetTolen: req.params.tolen,
-              resetTolenExp: {$gt: Date.now()}}
+              [Op.and]:
+              {resetTolenExp: {[Op.gt]: Date.now()}}}
         })
         if (!candidate) {
             res.redirect('/auth/login');
