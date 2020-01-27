@@ -2,6 +2,7 @@
         // "terminal.integrated.shell.windows": "D:\\EPAM\\Git\\bin\\bash.exe"
    // "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
    "cSpell.words": [
+      "Bcryptsjs",
       "csrf",
       "downlevel",
       "eather",
@@ -9,8 +10,11 @@
       "hoverable",
       "interop",
       "iteration",
+      "mailtrap",
+      "smtp",
       "sourcemap",
       "statew",
+      "tolen",
       "tslib",
       "typechecking",
       "weatherapp",

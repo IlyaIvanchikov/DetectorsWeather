@@ -36,7 +36,7 @@ router.get('/sensors/:id', async (req, res) => {
     const detector = await Detector.findByPk(req.params.id);
 
     if (detector !== null) {
-        const urlWeather = (`https://api.openweathermap.org/data/2.5/weather?q=${detector.location}&appid=${keys.API_URL}`);
+        const urlWeather = (`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(detector.location)}&appid=${keys.API_URL}`);
         const resp = await fetch(urlWeather);
         try {
             const mySity = await resp.json();

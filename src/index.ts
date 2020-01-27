@@ -1,4 +1,3 @@
- import mysql2 from 'mysql2';
  import express from 'express';
  import path from 'path';
  import sequelize from './utils/sequilize';
@@ -10,7 +9,6 @@
  import routerLogin from './routes/auth';
  import profile from './routes/profile';
  import routerSensors from './routes/sensors';
-//  import mongoose from 'mongoose';
  import session from 'express-session';
  const MySQLStore = require('express-session-sequelize')(session.Store);
  import constMiddleware from './middleware/variables';

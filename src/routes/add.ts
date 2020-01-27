@@ -1,6 +1,7 @@
 import Router  from 'express';
 import Detector  from '../models/detectors';
 import auth from '../middleware/auth';
+import { Request, Response, NextFunction } from "express";
 import { sensorValidators } from '../utils/validators';
 import { validationResult } from 'express-validator';
 
@@ -13,7 +14,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/', sensorValidators, auth, async (req:any, res:any) => {
+router.post('/', sensorValidators, auth, async (req: Request, res: Response) => {
     const error = validationResult(req);
 
     if(!error.isEmpty()) {
