@@ -1,8 +1,7 @@
 {
-        // "terminal.integrated.shell.windows": "D:\\EPAM\\Git\\bin\\bash.exe"
-   // "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
    "cSpell.words": [
       "Bcryptsjs",
+      "Sity",
       "csrf",
       "downlevel",
       "eather",
@@ -28,5 +27,4 @@
       "сервера",
       "удалить"
    ]
-   // "terminal.integrated.shell.windows": "D:\\JS EPAM\\Git\\bin\\bash.exe"
 }

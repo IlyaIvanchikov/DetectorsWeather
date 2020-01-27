@@ -1,12 +1,12 @@
-import Router, { response }  from 'express';
+import Router from 'express';
 import Detector from '../models/detectors';
 import keys from '../keys';
 import fetch from 'node-fetch';
-import { Sequelize, Model, DataTypes, BuildOptions } from 'sequelize';
 import auth from '../middleware/auth';
+import { Request, Response, NextFunction } from "express";
 import { sensorValidators } from '../utils/validators';
-import { validationResult } from 'express-validator';
 const router = Router();
+const KELVIN = 273.15;
 
 router.get('/sensors',  async (req, res) => {
     const detector = await Detector.findAll();
@@ -40,7 +40,7 @@ router.get('/sensors/:id', async (req, res) => {
         const resp = await fetch(urlWeather);
         try {
             const mySity = await resp.json();
-            const temp = Math.trunc(mySity.main.temp - 273.15);
+            const temp = Math.trunc(mySity.main.temp - KELVIN);
             res.render('sensor', {
                 title: `Датчик ${detector.location}`,
                 layout: 'empty', 
@@ -61,7 +61,7 @@ router.get('/sensors/:id', async (req, res) => {
 
 })
 
-router.post('/edit', sensorValidators, auth, async (req:any, res:any) => {
+router.post('/edit', sensorValidators, auth, async (req: Request, res: Response) => {
 
     if(!req.body) return res.sendStatus(400);
     const { id } = req.body;

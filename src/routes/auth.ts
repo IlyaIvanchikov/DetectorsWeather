@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import User from '../models/users';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
+import { Request, Response, NextFunction } from "express";
 import { validationResult } from 'express-validator';
 import { registerValidators } from '../utils/validators';
 import regEmail from '../emails/registration';
@@ -41,9 +42,9 @@ router.post('/auth/login', async (req, res) => {
         if (candidate) {
             const areSome = await bcrypt.compare(password, candidate.password);
             if (areSome) {
-                req!.session!.user = candidate;
-                req!.session!.isAuthenticated = true;
-                req!.session!.save(err => {
+                req.session!.user = candidate;
+                req.session!.isAuthenticated = true;
+                req.session!.save(err => {
                    if(err) {
                     throw err;
                    } 
@@ -65,7 +66,7 @@ router.post('/auth/login', async (req, res) => {
     }
 });
 
-router.post('/auth/register', registerValidators, async (req:any, res:any) => {
+router.post('/auth/register', registerValidators, async (req: Request, res: Response) => {
     try {
     const {fio, login, email, password, confirm} = req.body;
     const errors = validationResult(req);
