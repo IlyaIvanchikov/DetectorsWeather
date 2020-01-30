@@ -2,21 +2,17 @@ import Router from 'express';
 import bcrypt from 'bcryptjs';
 import User from '../models/users';
 import crypto from 'crypto';
-import nodemailer from 'nodemailer';
 import { validationResult } from 'express-validator';
 import { registerValidators } from '../utils/validators';
-import regEmail from '../emails/registration';
-import resetEmail from '../emails/reset';
 
+import { EmailService } from '../service/email/email-service';
+import container from '../container';
+import { TYPES } from '../types';
+import { Configuration } from '../configuration/configuration';
+
+const emailService = container.get<EmailService>(TYPES.EmailService);
+const configuration = container.get<Configuration>(TYPES.Configuration);
 const router = Router();
-const transporter = nodemailer.createTransport({
-    host: 'smtp.mailtrap.io',
-    port: 2525,
-    auth: {
-        user: '8649b9dce8cbd9',
-        pass: '48fca78c216ed1'
-    }
-});
 
 router.get('/auth/login', async (req, res) => {
     res.render('auth/login',
@@ -66,29 +62,21 @@ router.post('/auth/login', async (req, res) => {
 });
 
 router.post('/auth/register', registerValidators, async (req: any, res: any) => {
-    try {
-        const { fio, login, email, password, confirm } = req.body;
-        const errors = validationResult(req);
+    const { fio, login, email, password, confirm } = req.body;
+    const errors = validationResult(req);
 
-        if (!errors.isEmpty()) {
-            req.flash('RegisterError', errors.array()[0].msg);
-            return res.status(422).redirect('/auth/login#register');
-        }
-        const passwordBcryptsjs = await bcrypt.hash(password, 10);
-        const user = new User({ fio, login, email, password: passwordBcryptsjs, confirm });
-        await user.save();
+    if (!errors.isEmpty()) {
+        req.flash('RegisterError', errors.array()[0].msg);
+        return res.status(422).redirect('/auth/login#register');
+    }
 
-        res.redirect('/auth/login#login');
-        transporter.sendMail(regEmail(email), (err, info) => {
-            if (err) {
-                console.log(err);
-            }
-            console.log(info);
-        });
-    }
-    catch (e) {
-        console.log(e);
-    }
+    const passwordHash = await bcrypt.hash(password, 10);
+    const user = new User({ fio, login, email, password: passwordHash, confirm });
+    await user.save();
+
+    res.redirect('/auth/login#login');
+
+    return emailService.sendRegisterMail(email);
 });
 
 router.get('/auth/reset', (req, res) => {
@@ -102,30 +90,26 @@ router.post('/auth/reset', async (req, res) => {
     try {
         crypto.randomBytes(32, async (err, buffer): Promise<void> => {
             if (err) {
-                req.flash('error', 'Что-то пошо не так попробуйте позже');
+                req.flash('error', 'Что-то пошло не так попробуйте позже');
                 res.redirect('/auth/reset');
             }
-            const tolen = buffer.toString('hex');
+            const token = buffer.toString('hex');
             const candidate = await User.findOne({ email: req.body.email });
 
-            if (candidate) {
-                candidate.resetTolen = tolen;
-                candidate.resetTolenExp = Date.now() + 60 * 60 * 1000;
-                await candidate.save();
-
-                try {
-                    const info = await transporter.sendMail(resetEmail(candidate.email, tolen));
-                    console.log(`send mail = ${info}`);
-                } catch (error) {
-                    console.log(error);
-                }
-
-                res.redirect('/auth/login');
-            }
-            else {
+            if (!candidate) {
                 req.flash('error', 'Такого поьзоватея нет');
                 res.redirect('/auth/reset');
             }
+
+            candidate.resetTolen = token;
+            candidate.resetTolenExp = Date.now() + 60 * 60 * 1000;
+            await candidate.save();
+
+            const restoreUrl = `${configuration.baseUrl}/auth/password/${token}`;
+
+            emailService.sendRestorePasswordMail(candidate.email, restoreUrl)
+
+            res.redirect('/auth/login');
         })
     }
     catch (e) {
