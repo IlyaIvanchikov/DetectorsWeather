@@ -1,5 +1,4 @@
-{
-        // "terminal.integrated.shell.windows": "D:\\EPAM\\Git\\bin\\bash.exe"
+{  
    "cSpell.words": [
       "csrf",
       "downlevel",
@@ -17,6 +16,10 @@
       "отсутствуют",
       "редактировать",
       "удалить"
-   ]
-   // "terminal.integrated.shell.windows": "D:\\JS EPAM\\Git\\bin\\bash.exe"
+   ],
+   "mochaExplorer.files": "test/**/*test.ts",
+   "mochaExplorer.require": "ts-node/register",
+   "mochaExplorer.env": {
+      "NODE_ENV": "test"
+   }
 }

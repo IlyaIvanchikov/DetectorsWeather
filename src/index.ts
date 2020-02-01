@@ -1,3 +1,14 @@
+import 'reflect-metadata';
+
+import container from './container';
+import { configure } from './bootstrap';
+import { Configuration } from './configuration/configuration';
+import { TYPES } from './types';
+
+configure(container);
+
+const configuration = container.get<Configuration>(TYPES.Configuration);
+
 import express from 'express';
 import path from 'path';
 import csurf from 'csurf';
@@ -11,19 +22,18 @@ import routerSensors from './routes/sensors';
 import mongoose from 'mongoose';
 import session from 'express-session';
 import connectMongo = require('connect-mongodb-session');
-const MongoDBStore = connectMongo(session);
 import constMiddleware from './middleware/variables';
-import keys from './keys';
 import error404 from './middleware/404';
 import userMiddleware from './middleware/user';
 import fileMiddleware from './middleware/file';
 
-const app = express();
+const MongoDBStore = connectMongo(session);
 
+const app = express();
 
 const store = new MongoDBStore({
     collection: 'sessions',
-    uri: keys.MONGODB_URI
+    uri: configuration.mongodbUri
 });
 
 app.engine('hbs', exphbs({
@@ -38,7 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-    secret: keys.SECRET_SESSION,
+    secret: configuration.secretSession,
     resave: false,
     saveUninitialized: false,
     store
@@ -59,18 +69,15 @@ app.use(error404);
 const PORT = process.env.PORT || 3000;
 
 const start = async () => {
-    try {
-        await mongoose.connect(keys.MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useFindAndModify: false
-        })
-        app.listen(PORT, () => {
-            console.log(`server  is running on port ${PORT}`);
-        })
-    }
-    catch (err) {
-        console.log(err);
-    }
+    await mongoose.connect(configuration.mongodbUri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false
+    })
+
+    app.listen(PORT, () => {
+        console.log(`server  is running on port ${PORT}`);
+    })
 }
+
 start();
