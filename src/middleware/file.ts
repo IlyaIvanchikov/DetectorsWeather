@@ -22,4 +22,3 @@ const fileFilter = (req: Express.Request, file: Express.Multer.File, callback: (
 export default multer({
     storage, fileFilter
 });
-
