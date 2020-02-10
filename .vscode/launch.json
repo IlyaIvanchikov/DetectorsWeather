@@ -8,9 +8,35 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}\\build\\index.js",
-            "outFiles": [
-                "${workspaceFolder}/**/*.js"
+            "program": "${workspaceFolder}/build/index.js",
+            "skipFiles": [
+                "<node_internals>/**",
+            ]
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Node: Nodemon",
+            "processId": "${command:PickProcess}",
+            "restart": true,
+            "protocol": "inspector",
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha Tests",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "-u",
+                "bdd",
+                "--timeout",
+                "1000",
+                "--colors",
+                "${workspaceFolder}/build/test/**/*.js"
+            ],
+            "internalConsoleOptions": "openOnSessionStart",
+            "skipFiles": [
+                "<node_internals>/**"
             ]
         }
     ]

@@ -1,25 +1,12 @@
-{  
-   "cSpell.words": [
-      "csrf",
-      "downlevel",
-      "eather",
-      "esnext",
-      "hoverable",
-      "interop",
-      "iteration",
-      "sourcemap",
-      "statew",
-      "tslib",
-      "typechecking",
-      "датчики",
-      "открыть",
-      "отсутствуют",
-      "редактировать",
-      "удалить"
-   ],
-   "mochaExplorer.files": "test/**/*test.ts",
+{
+   "mochaExplorer.files": "src/test/**/*test.ts",
    "mochaExplorer.require": "ts-node/register",
    "mochaExplorer.env": {
       "NODE_ENV": "test"
-   }
+   },
+   "files.exclude": {
+      "node_modules/": true,
+      "doc/": true
+   },
+   "debug.node.autoAttach": "off"
 }
